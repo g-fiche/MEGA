@@ -1,0 +1,7 @@
+/body_models
+/datasets
+/outputs
+/mesh_vq_vae
+*__pycache__*
+*.pyc
+/checkpoint

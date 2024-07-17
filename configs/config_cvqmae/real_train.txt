@@ -1,0 +1,4 @@
+datasets/coco/coco.npz
+datasets/h36m_train/h36m_train.npz
+datasets/mpi_inf_3dhp_train/mpi_inf_3dhp_train.npz
+datasets/mpii/mpii.npz
