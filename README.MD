@@ -171,6 +171,7 @@ To test the ResNet and ViT models, simply change ```hrnet``` to ```resnet``` or 
 To test MEGA in the stochastic mode, comment L105 and uncomment L106. You can choose the sample size L106 of ```test_mega.py```. You then need to adjust the batch sizes in the config file. In the stochastic mode, ```train.batch=1``` and ```modelconv.batch=sample_size```.
 
 You can then run the test with:
+
     python test_mega.py
 
 
