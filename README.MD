@@ -1,17 +1,12 @@
 # MEGA
 
-This repository implements the MEGA, introduced in the paper: [MEGA](https://g-fiche.github.io/research-pages/mega/).
+This repository implements the MEGA, introduced in the CVPR-2025 paper: [MEGA: Masked Generative Autoencoder for Human Mesh Recovery](https://g-fiche.github.io/research-pages/mega/).
 
 If you find this code useful, please consider citing the associated [paper](https://g-fiche.github.io/research-pages/mega/).
 
 ![MEGA](images/teaser.png)
 
-This work proposes a new approach to human mesh recovery (HMR) based on masked generative modeling. By tokenizing the human pose and shape, we formulate the HMR task as generating a sequence of discrete tokens conditioned on an input image. Given an image, our flexible generation scheme allows us to predict a single human mesh in deterministic mode or to generate multiple human meshes in stochastic mode. MEGA enables us to propose multiple outputs and to evaluate the uncertainty of the predictions (as shown in the image above).
-
-
-## TODO
-- Add the conference in the first sentence when publishing the code.
-- Add the link for downloading the models on Zenodo.
+This work proposes a new approach to human mesh recovery (HMR) based on masked generative modeling. By tokenizing the human pose and shape, we formulate the HMR task as generating a sequence of discrete tokens conditioned on an input image. MEGA can generate multiple outputs given a single image, which is particularly useful in challenging scenarios (as shown on the image below).
 
 
 ## Installation
@@ -21,27 +16,23 @@ This work proposes a new approach to human mesh recovery (HMR) based on masked g
     conda create -n mega python=3.9
     conda activate mega
 
+### Install Pytorch
 
-### Install pytorch
+    conda install pytorch==2.4.0 torchvision==0.19.0 torchaudio==2.4.0 pytorch-cuda=12.4 -c pytorch -c nvidia
 
-    conda install pytorch=1.13.0 torchvision pytorch-cuda=11.6 -c pytorch -c nvidia
+### Install Pytorch3D
 
+To install Pytorch3D, we manually downloaded the conda package available [here](https://anaconda.org/pytorch3d/pytorch3d/files), and installed it with:
 
-### Install pytorch3d
+    conda install --use-local pytorch3d-0.7.8-py39_cu121_pyt240.tar.bz2
 
-    # Install dependencies for pytorch3d
-    conda install -c fvcore -c iopath -c conda-forge fvcore iopath
-    conda install -c bottler nvidiacub
+Another way of installing Pytorch3D is to follow the official [documentation](https://github.com/facebookresearch/pytorch3d/blob/main/INSTALL.md).
 
-    # Install pytorch3d
-    conda install pytorch3d -c pytorch3d
-
-Please refer to the official [pytorch3d](https://github.com/facebookresearch/pytorch3d/blob/main/INSTALL.md) documentation for installation.
+We use Pytorch3D for visualizing of meshes and for rotation transforms. If the Pytorch3D installation is not possible in your environment, one could use transforms from the [RoMa](https://naver.github.io/roma/) library and use the reprojection code in ```mega/utils/img_renderer.py``` on blank images.
 
 ### Install other dependencies
 
     python -m pip install -r requirements.txt
-
 
 
 ## Data
@@ -49,13 +40,14 @@ Please refer to the official [pytorch3d](https://github.com/facebookresearch/pyt
 This repository relies on various external downloads in order to run the code. Here is a description of each of them.
 
 First, we create folders to store the downloads:
+
     mkdir body_models
     mkdir datasets
     mkdir checkpoint
 
 ### Checkpoints
 
-Checkpoints are available [here](). Download them under the ```checkpoint``` directory. The structure should look as the following:
+Checkpoints are available [here](https://zenodo.org/records/14974141). Download them under the ```checkpoint``` directory. The structure should look as the following:
 ```
 ${checkpoint}  
 |-- CVQMAE
@@ -76,16 +68,16 @@ The [SMPL-H](https://mano.is.tue.mpg.de/index.html) body model is used to obtain
 - Go to the Downloads page and download the "Extended SMPL+H model (used in AMASS)". Place the downloaded smplh.tar.xz in the ```body_models``` folder and extract it.
 - This should create a ```smplh``` folder. Rename the ```male``` subfolder to ```m``` and the ```female``` subfolder to ```f```.
 
-Since VQ-HPS is non-parametric, we need joint regressors to compute the position of body joints.
-- The SMPL 24 joints regressor can be extracted from the SMPL model downloaded below as the ```J_regressor.npy``` is one of the files contained in ```model.npz```.
+Since MEGA is non-parametric, we need joint regressors to compute the position of body joints.
+- The SMPL 24 joints regressor can be extracted from the SMPL model downloaded below as the ```J_regressor.npy```. Go to ```body_models``` and run ```unzip smplh/m/model.npz J_regressor.npy```.
 - The Human3.6M joints extractor can be downloaded [here](https://github.com/open-mmlab/mmhuman3d/blob/main/docs/getting_started.md#body-model-preparation).
 - Place both joint extractors under the ```body_models``` folder and rename them ```J_regressor_24.npy``` and ```J_regressor_h36m.npy```.
 
 ### Mesh-VQ-VAE
 
-VQ-HPS relies on a quantized representation of human meshes obtained by Mesh-VQ-VAE, a VQ-VAE architecture adapted to fixed topology human meshes.
+MEGA relies on a quantized representation of human meshes obtained by Mesh-VQ-VAE, a VQ-VAE architecture adapted to fixed topology human meshes.
 
-Clone the [Mesh-VQ-VAE](https://github.com/g-fiche/Mesh-VQ-VAE) repository aside from the VQ-HPS directory, and copy the ```mesh_vq_vae``` folder in the VQ-HPS directory.
+Clone the [Mesh-VQ-VAE](https://github.com/g-fiche/Mesh-VQ-VAE) repository aside from the MEGA directory, and copy the ```mesh_vq_vae``` folder in the MEGA directory.
 
 Follow the instructions of [Mesh-VQ-VAE](https://github.com/g-fiche/Mesh-VQ-VAE) for downloading the files associated with the fully convolutional mesh autoencoder and place them in the ```body_models``` folder.
 
@@ -192,8 +184,8 @@ Some code in this repository is adapted from the following repositories:
 ## Citation
 
     @inproceedings{fiche2024vq,
-        title={VQ-HPS: Human Pose and Shape Estimation in a Vector-Quantized Latent Space},
-        author={Fiche, Gu{\'e}nol{\'e} and Leglaive, Simon and Alameda-Pineda, Xavier and Agudo, Antonio and Moreno-Noguer, Francesc},
-        booktitle={European Conference on Computer Vision ({ECCV})},
-        year={2024}
+        title={MEGA: Masked Generative Autoencoder for Human Mesh Recovery},
+        author={Fiche, Gu{\'e}nol{\'e} and Leglaive, Simon and Alameda-Pineda, Xavier and Moreno-Noguer, Francesc},
+        booktitle={IEEE/CVF Conference on Computer Vision and Pattern Recognition ({CVPR})},
+        year={2025}
     }
