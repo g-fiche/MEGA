@@ -14,3 +14,4 @@ timm==1.0.15
 einops==0.8.1
 yacs==0.1.8
 iopath==0.1.10
+ultralytics==8.3.75

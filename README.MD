@@ -122,6 +122,12 @@ For the testing datasets, we use [3DPW](https://virtualhumans.mpi-inf.mpg.de/3DP
 - Prepare the annotations npz files using the scripts available in the ```preprocess_data``` folder of [VQ-HPS](https://g-fiche.github.io/research-pages/vqhps/).
 
 
+## Demo
+
+You can run the HRNet version of MEGA on images located in the ```demo_data``` folder and save renderings in ```demo_out```:
+    python demo.py
+
+
 ## Train
 
 ### Self-supervised pre-training
