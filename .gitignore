@@ -6,3 +6,4 @@
 *.pyc
 /checkpoint
 demo_out
+demo_data
