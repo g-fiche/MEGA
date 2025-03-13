@@ -127,6 +127,9 @@ For the testing datasets, we use [3DPW](https://virtualhumans.mpi-inf.mpg.de/3DP
 You can run the HRNet version of MEGA on images located in the ```demo_data``` folder and save renderings in ```demo_out```:
     python demo.py
 
+For a more interactive demo, use:
+    python gradio_app.py
+
 
 ## Train
 
@@ -180,6 +183,7 @@ This study is part of the EUR DIGISPORT project supported by the ANR within the 
 
 Some code in this repository is adapted from the following repositories:
 - [VQ-MAE-S](https://github.com/samsad35/VQ-MAE-S-code)
+- [HMR2.0](https://shubham-goel.github.io/4dhumans/)
 - [Pose-NDF](https://github.com/garvita-tiwari/PoseNDF/tree/version2)
 - [HuMoR](https://github.com/davrempe/humor)
 - [FastMETRO](https://github.com/postech-ami/FastMETRO)
