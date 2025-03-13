@@ -125,9 +125,11 @@ For the testing datasets, we use [3DPW](https://virtualhumans.mpi-inf.mpg.de/3DP
 ## Demo
 
 You can run the HRNet version of MEGA on images located in the ```demo_data``` folder and save renderings in ```demo_out```:
+
     python demo.py
 
 For a more interactive demo, use:
+
     python gradio_app.py
 
 
